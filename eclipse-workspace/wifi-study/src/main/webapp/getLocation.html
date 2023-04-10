@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<h1 class="위도">위도 : <span id="latitude"></span></h1>
+	<h1 class="경도">경도 : <span id="longitude"></span></h1>
+<script>
+	$(document).ready(function(){
+		if ("geolocation" in navigator) {	// geolocation 사용 가능
+			navigator.geolocation.getCurrentPosition(function(data) {
+			
+				var latitude = data.coords.latitude;
+				var longitude = data.coords.longitude;
+				
+				$('#latitude').text(latitude);
+				$('#longitude').text(longitude);
+			}, function(error) {
+				alert(error);
+			}, {
+				enableHighAccuracy: true,
+				timeout: Infinity,
+				maximumAge: 0
+			});
+		} else {	// geolocation 사용 불가능
+			alert('geolocation 사용 불가능');
+		}
+	});
+</script>
+</body>
