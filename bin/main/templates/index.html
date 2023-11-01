@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메인화면</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="/">홈</a></li>
+            <li><a href="/board">게시판</a></li>
+            <li><a href="/logout">로그아웃</a></li>
+            <li><a href="/signup">로그인</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- 친구 목록 표시 버튼 -->
+<button id="show-friends-button">
+    <i class="fas fa-user"></i>
+</button>
+
+
+<!-- 친구 목록 -->
+<div class="friend-list">
+    <button class="close-button" id="close-friends-button">X</button>
+
+    <h3>Favorites</h3>
+    <ul>
+        <li th:each="friend, friendIndex : ${friends}" th:if="${friend.getType() == Favorites}">
+            <span th:text="${friend.getFriendUserNickname()}"></span>
+            <button class="change-type-button" th:data-id="${friend.id}">Type</button>
+            <button class="delete-button" data-id="${friend.id}" th:onclick="'deleteFriend(\'' + ${friend.id} + '\');'">삭제</button>
+        </li>
+    </ul>
+
+    <h3>Best Friends</h3>
+    <ul>
+        <li th:each="friend, friendIndex : ${friends}" th:if="${friend.getType() == BestFriend}">
+            <span th:text="${friend.getFriendUserNickname()}"></span>
+            <button class="change-type-button"  th:data-id="${friend.id}">Type</button>
+            <button class="delete-button" data-id="${friend.id}" th:onclick="'deleteFriend(\'' + ${friend.id} + '\');'">삭제</button>
+        </li>
+    </ul>
+
+
+
+    <h3>First Meet</h3>
+    <ul>
+        <li th:each="friend, friendIndex : ${friends}" th:if="${friend.getType() == FirstMeet}">
+            <span th:text="${friend.getFriendUserNickname()}"></span>
+            <button class="change-type-button" th:data-id="${friend.id}">Type</button>
+            <button class="delete-button" data-id="${friend.id}" th:onclick="'deleteFriend(\'' + ${friend.id} + '\');'">삭제</button>
+        </li>
+    </ul>
+
+
+    <!-- 친구 타입 변경 모달 창 -->
+    <div class="type-change-modal" style="display: none;">
+        <div class="type-change-form">
+            <button class="close-modal-button" type="button">닫기</button>
+            <h3>친구 타입 변경</h3>
+            <form>
+                <!-- friendId를 friend-list에서 type-change-modal에 전달받아 여기에서 friendIdPlaceholder로 처리 -->
+                <h3 id="friendIdPlaceholder"></h3>
+                <input type="hidden" name="friendId" id="friendIdInput"> <!-- 이 부분을 확인합니다. -->
+                <label><input type="radio" name="friendType" value="Favorites">Favorites</label>
+                <label><input type="radio" name="friendType" value="BestFriend">BestFriend</label>
+                <label><input type="radio" name="friendType" value="FirstMeet">FirstMeet</label>
+                <!-- 변경된 HTML 코드 -->
+                <button class="change-type-button" data-id="${friend.id}"
+                        th:onclick="'changeType(\'' + ${friendIdPlaceholder} + '\');'">변경</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- 친구 추가 버튼 -->
+    <button id="add-friend-button">친구 추가</button>
+
+    <!-- 친구 추가 폼 (초기에는 숨겨져 있음) -->
+    <div class="friend-add-form">
+        <form id="friend-add-form" method="POST" action="/friends">
+            <input type="text" name="friendnickname" id="friend-nickname" placeholder="친구의 닉네임 적어주세요.">
+            <button type="submit">추가</button>
+            <button class="down-button">닫기</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/index.js"></script>
+</body>
+</html>

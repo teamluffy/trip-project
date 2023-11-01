@@ -1,4 +1,4 @@
-package com.teamluffy.tripproject.chat.domain;
+package com.teamluffy.tripproject.chat.domain.model.room;
 
 import com.teamluffy.tripproject.chat.domain.entity.ChatRoom;
 import java.util.ArrayList;

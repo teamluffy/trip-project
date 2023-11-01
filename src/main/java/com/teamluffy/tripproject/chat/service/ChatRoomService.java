@@ -1,6 +1,6 @@
 package com.teamluffy.tripproject.chat.service;
 
-import com.teamluffy.tripproject.chat.domain.ChatRoomDto;
+import com.teamluffy.tripproject.chat.domain.model.room.ChatRoomDto;
 import com.teamluffy.tripproject.chat.domain.entity.ChatRoom;
 import com.teamluffy.tripproject.chat.repository.ChatRoomRepository;
 import java.util.Collections;

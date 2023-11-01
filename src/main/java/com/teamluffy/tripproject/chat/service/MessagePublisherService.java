@@ -1,7 +1,7 @@
 package com.teamluffy.tripproject.chat.service;
 
 
-import com.teamluffy.tripproject.chat.domain.entity.ChatMessage;
+import com.teamluffy.tripproject.chat.domain.model.chat.SendChatMessageForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
 public class MessagePublisherService {
 
   private final RedisTemplate redisTemplate;
-  private final PatternTopic chatMessagesPatternTopic;
+  private final PatternTopic chatMessagesPatterTopic;
 
-  public void sendMessage(ChatMessage chatMessage) {
-    redisTemplate.convertAndSend(chatMessagesPatternTopic.getTopic(), chatMessage);
+  public void sendMessage(SendChatMessageForm sendChatMessageForm) {
+    try {
+      log.info(chatMessagesPatterTopic.getTopic());
+      redisTemplate.convertAndSend(chatMessagesPatterTopic.getTopic(), sendChatMessageForm);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }

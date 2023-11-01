@@ -10,7 +10,7 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Stri
   @Query("{'sender':?0,'roomId':?1}")
   List<ChatMessage> mFindBySender(String sender, String roomId);
 
-  @Query("{'roomId': ?0}")
-  List<ChatMessage> findByRoomId(String roomId);
+  @Query("{ 'message.roomId' : ?0 }")
+  List<ChatMessage> findByRoomIdInMessage(String roomId);
 
 }
